@@ -1,13 +1,14 @@
 import { faker } from '@faker-js/faker';
 import connection from './db.mjs';
+import chalk from 'chalk'
 
 const removeTable = () => {
-  console.log('🗑 Delete old table... 🗑')
+  console.log(chalk.red('🗑 Delete old table... 🗑'))
   connection.query('drop table if exists users')
-  console.log('Tables deleted ✅')
+  console.log(chalk.bold.green('Tables deleted ✅'))
 }
 const createTableDB = () => {
-  console.log('Create new Table ')
+  console.log(chalk.blue('Create new Table '))
   connection.query(`
     create table users(
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -18,6 +19,7 @@ const createTableDB = () => {
 
   )
   `)
+  console.log(chalk.bold.green('Create users Table ✅'))
 }
 const createUsersFake = async () => {
   for (let i = 0; i < 100; i++) {
