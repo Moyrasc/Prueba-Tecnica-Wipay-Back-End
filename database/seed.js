@@ -1,5 +1,5 @@
-import { faker } from '@faker-js/faker';
-import connection from './db.mjs';
+import { faker } from '@faker-js/faker'
+import connection from './db.js'
 import chalk from 'chalk'
 
 const removeTable = () => {
