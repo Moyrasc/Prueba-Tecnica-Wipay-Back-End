@@ -33,8 +33,16 @@ const createUsersFake = async () => {
     `, [[email, password]])
   }
 }
+const createUserAdmin = async () => {
+  connection.query(`
+  insert into users
+  (email,password)
+  values
+  (?)`, [['admin@admin.com', 'admin']])
+}
 removeTable()
 createTableDB()
 createUsersFake()
+createUserAdmin()
 
 connection.end()
