@@ -14,7 +14,6 @@ export const getAllUsers = async (req, res, next) => {
 export const getUser = async (req, res, next) => {
   try {
     const { id } = req.params
-    console.log(id)
     const data = await dbQuery('SELECT * FROM users WHERE id = ?', [id])
     res.send(data)
   } catch (error) {
@@ -22,5 +21,17 @@ export const getUser = async (req, res, next) => {
     next(error)
   }
 }
+// Crear usuario
 // Editar usuario
 // Eliminar usuario
+export const deleteUser = async (req, res, next) => {
+  try {
+    const { id } = req.params
+    console.log(id)
+    const data = await dbQuery('DELETE  FROM users WHERE id = ?', [id])
+    res.send(data)
+  } catch (error) {
+    console.error(chalk.redBright('deleteUser: ' + error.sqlMessage))
+    next(error)
+  }
+}
