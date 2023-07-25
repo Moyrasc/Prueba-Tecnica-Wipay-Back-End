@@ -22,12 +22,21 @@ export const getUser = async (req, res, next) => {
   }
 }
 // Crear usuario
+export const addUser = async (req, res, next) => {
+  try {
+    const { email, password } = req.body
+    const data = await dbQuery('INSERT INTO users (email,password) VALUES (?,?)', [email, password])
+    res.send(data)
+  } catch (error) {
+    console.error(chalk.redBright('addUser: ' + error.sqlMessage))
+    next(error)
+  }
+}
 // Editar usuario
 // Eliminar usuario
 export const deleteUser = async (req, res, next) => {
   try {
     const { id } = req.params
-    console.log(id)
     const data = await dbQuery('DELETE  FROM users WHERE id = ?', [id])
     res.send(data)
   } catch (error) {
