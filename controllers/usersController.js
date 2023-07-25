@@ -33,6 +33,17 @@ export const addUser = async (req, res, next) => {
   }
 }
 // Editar usuario
+export const editUser = async (req, res, next) => {
+  try {
+    const { id } = req.params
+    const { email, password } = req.body
+    const data = await dbQuery('UPDATE users SET email = ?, password = ?, modificate_user = DATE(NOW()) WHERE id = ?', [email, password, id])
+    res.send(data)
+  } catch (error) {
+    console.error(chalk.redBright('editUser: ' + error.sqlMessage))
+    next(error)
+  }
+}
 // Eliminar usuario
 export const deleteUser = async (req, res, next) => {
   try {
