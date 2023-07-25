@@ -1,4 +1,4 @@
-import passport from 'passport'
+import passport from 'passport-jwt'
 import jwt from 'jsonwebtoken'
 import 'dotenv/config'
 
@@ -8,7 +8,7 @@ export const loginController = async (req, res, next) => {
   passport.authenticate('login', async (err, user, info) => {
     try {
       if (!user || err) {
-        return res.status(401).send('Credenciales Erroóeos!')
+        return res.status(401).send('Credenciales Erróneos!')
       }
       req.login(user, { session: false }, (error) => {
         if (error) {

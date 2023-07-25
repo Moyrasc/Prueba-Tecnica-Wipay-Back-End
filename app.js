@@ -1,7 +1,9 @@
 import express from 'express'
 import cors from 'cors'
 import morgan from 'morgan'
-import routerLogin from './routes/login'
+// import passport from 'passport'
+import routerLogin from './routes/login.js'
+import routerUsers from './routes/users.js'
 const app = express()
 
 app.use(cors())
@@ -12,11 +14,18 @@ app.get('/', (req, res) => {
 })
 // Routes
 app.use('login', routerLogin)
+app.use('/users', routerUsers)
 
 app.use((req, res) => {
   res.status(404).send({
     status: 'error',
     message: 'Not Found'
+  })
+})
+app.use((error, req, res, _next) => {
+  res.status((error.httpStatus !== undefined) ? error.httpStatus : 500).send({
+    status: 'error',
+    message: error.message
   })
 })
 export default app
