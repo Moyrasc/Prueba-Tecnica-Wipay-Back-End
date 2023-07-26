@@ -1,4 +1,4 @@
-import passport from 'passport-jwt'
+import passport from 'passport'
 import jwt from 'jsonwebtoken'
 import 'dotenv/config'
 
