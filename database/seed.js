@@ -38,7 +38,7 @@ const createUserAdmin = async () => {
   insert into users
   (email,password)
   values
-  (?)`, [['admin@admin.com', 'admin']])
+  (?)`, [['admin@admin.com', 'admin01']])
 }
 removeTable()
 createTableDB()
