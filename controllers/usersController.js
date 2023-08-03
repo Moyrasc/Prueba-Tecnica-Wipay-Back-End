@@ -15,7 +15,12 @@ export const getUser = async (req, res, next) => {
   try {
     const { id } = req.params
     const data = await dbQuery('SELECT * FROM users WHERE id = ?', [id])
-    res.send(data)
+    if (data.length === 0) {
+      // Si no se encontró ningún usuario, devuelve un error 404
+      res.status(404).send({ error: 'Usuario no encontrado' })
+    } else {
+      res.send(data)
+    }
   } catch (error) {
     console.error(chalk.redBright('getUser: ' + error.sqlMessage))
     next(error)
@@ -25,13 +30,19 @@ export const getUser = async (req, res, next) => {
 export const addUser = async (req, res, next) => {
   try {
     const { email, password } = req.body
-    const data = await dbQuery('INSERT INTO users (email,password) VALUES (?,?)', [email, password])
-    res.send(data)
+    const insertQuery = 'INSERT INTO users (email, password) VALUES (?, ?)'
+    const selectQuery = 'SELECT * FROM users WHERE id = LAST_INSERT_ID()'
+    // Inserta el nuevo usuario en la base de datos
+    await dbQuery(insertQuery, [email, password])
+    // Obtén el usuario recién creado
+    const [user] = await dbQuery(selectQuery)
+    res.send(user)
   } catch (error) {
     console.error(chalk.redBright('addUser: ' + error.sqlMessage))
     next(error)
   }
 }
+
 // Editar usuario
 export const editUser = async (req, res, next) => {
   try {
